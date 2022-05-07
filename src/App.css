@@ -1,12 +1,23 @@
+._main-slider .slick-dots {
+  bottom: 2.25rem
+}
+
 ._shelfs .slick-dots {
   position: static!important;
   margin-top: 1rem;
 }
 
+._main-slider .slick-dots > li > button::before,
 ._shelfs .slick-dots > li > button::before {
   font-size: .5rem
 }
 
+._main-slider .slick-dots > li > button::before {
+  color: #BDBDBD;
+  opacity: 100;
+}
+
+._main-slider .slick-dots > li.slick-active > button::before,
 ._shelfs .slick-dots > li.slick-active > button::before {
   color: #F8475F;
   opacity: 100;

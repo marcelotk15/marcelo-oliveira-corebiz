@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks/redux-typed-hooks';
 import { fetchProducts } from "./store/Products/Products.store";
 
 import './App.css';
+import MainSlider from "./components/MainSlider";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -37,6 +38,25 @@ function App() {
 
   return (
     <>
+      <section className="_main-slider">
+        <MainSlider>
+          {Array(4).fill(0).map((_, index) =>
+            <picture key={index}>
+              <source 
+                srcSet={`https://picsum.photos/1920/430?random=${index}`}
+                media="(min-width: 768px)"
+              />
+
+              <img
+                src={`https://picsum.photos/320/190?random=${index}`}
+                alt={`${index}`}
+                className="w-full"
+              />
+            </picture>
+          )}
+        </MainSlider>
+      </section>
+
       <section className="_shelfs mt-6">
         <div className="container mx-auto">
           <div>
