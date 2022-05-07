@@ -1,4 +1,5 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
+const palette = require('./palette');
 
 module.exports = {
   content: [
@@ -12,7 +13,9 @@ module.exports = {
 
       container: {
         padding: '1.5rem'
-      }
+      },
+
+      colors: palette
     },
   },
   plugins: [],
