@@ -12,19 +12,23 @@ const orderFormSlice = createSlice({
   reducers: {
     orderFormAdd: (state, { payload }) => {
       if (!state.items.length)
-        state.items = [{ ...payload, quantity: 1 }]
+        state.items = [{ ...payload, quantity: 1 }];
       else if (state.items.find((item) => item.productId === payload.productId)) {
         const index = state.items.findIndex((item) => item.productId === payload.productId);
 
-        state.items[index].quantity += 1
+        state.items[index].quantity += 1;
       } else {
-        state.items = [...state.items, { ...payload, quantity: 1 }]
+        state.items = [...state.items, { ...payload, quantity: 1 }];
       }
 
-      state.totalPrice = state.items.reduce((acc, act) => acc + (act.price * act.quantity), 0)
+      state.totalPrice = state.items.reduce((acc, act) => acc + (act.price * act.quantity), 0);
+    },
+
+    orderFormRemoveProduct: (state, { payload }) => {
+      state.items = state.items.filter((product) => product.productId !== payload);
     }
   }
 });
 
-export const { orderFormAdd } = orderFormSlice.actions;
+export const { orderFormAdd, orderFormRemoveProduct } = orderFormSlice.actions;
 export default orderFormSlice.reducer;
