@@ -12,7 +12,6 @@ import { orderFormDecrementProduct, orderFormIncrementProduct, orderFormRemovePr
 
 export default function MiniCart() {
   const dispatch = useAppDispatch();
-  const totalItem = useAppSelector((state) => state.orderForm?.items.reduce((acc, act) => acc + act.quantity, 0) || 0);
   const orderForm = useAppSelector((state) => state.orderForm);
 
   const [miniCartIsOpen, setMiniCartIsOpen] = useState(false);
@@ -38,7 +37,7 @@ export default function MiniCart() {
         />
 
         <div className="rounded-full w-5 h-5 flex justify-center items-center bg-red-500 text-sm font-semibold text-white">
-          {totalItem}
+          {orderForm.items.length}
         </div>
       </div>
 
@@ -106,7 +105,13 @@ export default function MiniCart() {
                                           <h3>
                                             {product.productName}
                                           </h3>
-                                          <p className="ml-4">{FormatPrice(product.price / 100)}</p>
+
+                                          <div className="flex flex-col ml-4 items-end">
+                                            {product.listPrice &&
+                                              <p className="text-sm line-through">{FormatPrice(product.listPrice / 100)}</p>
+                                            }
+                                            <p className="font-semibold">{FormatPrice(product.price / 100)}</p>
+                                          </div>
                                         </div>
                                       </div>
                                       <div className="flex flex-1 items-end justify-between text-sm">
