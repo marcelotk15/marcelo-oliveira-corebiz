@@ -26,9 +26,29 @@ const orderFormSlice = createSlice({
 
     orderFormRemoveProduct: (state, { payload }) => {
       state.items = state.items.filter((product) => product.productId !== payload);
-    }
+      state.totalPrice = state.items.reduce((acc, act) => acc + (act.price * act.quantity), 0);
+    },
+
+    orderFormIncrementProduct: (state, { payload }) => {
+      state.items[payload].quantity += 1;
+      state.totalPrice = state.items.reduce((acc, act) => acc + (act.price * act.quantity), 0);
+    },
+
+    orderFormDecrementProduct: (state, { payload }) => {
+      if (state.items[payload].quantity - 1 === 0)
+        state.items = state.items.filter((product) => product !== state.items[payload]);
+      else 
+        state.items[payload].quantity -= 1;
+      
+      state.totalPrice = state.items.reduce((acc, act) => acc + (act.price * act.quantity), 0);
+    },
   }
 });
 
-export const { orderFormAdd, orderFormRemoveProduct } = orderFormSlice.actions;
+export const {
+  orderFormAdd,
+  orderFormRemoveProduct,
+  orderFormIncrementProduct,
+  orderFormDecrementProduct
+} = orderFormSlice.actions;
 export default orderFormSlice.reducer;

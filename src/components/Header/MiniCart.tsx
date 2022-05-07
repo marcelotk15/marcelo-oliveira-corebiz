@@ -1,17 +1,17 @@
 import React, { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { AiOutlineClose } from "react-icons/ai"
-import { IoMdTrash } from "react-icons/io"
+import { AiOutlineClose } from "react-icons/ai";
+import { IoMdTrash } from "react-icons/io";
+import { FiInbox } from "react-icons/fi";
 
 import { useAppDispatch, useAppSelector } from "@/hooks/redux-typed-hooks";
 import FormatPrice from "@/helpers/price";
 
 import miniCart from "@/assets/icons/cart.svg";
-import { orderFormRemoveProduct } from "@/store/OrderForm/OrderForm.store";
+import { orderFormDecrementProduct, orderFormIncrementProduct, orderFormRemoveProduct } from "@/store/OrderForm/OrderForm.store";
 
 export default function MiniCart() {
   const dispatch = useAppDispatch();
-  const totalItem = useAppSelector((state) => state.orderForm?.items.reduce((acc, act) => acc + act.quantity, 0) || 0);
   const orderForm = useAppSelector((state) => state.orderForm);
 
   const [miniCartIsOpen, setMiniCartIsOpen] = useState(false);
@@ -37,7 +37,7 @@ export default function MiniCart() {
         />
 
         <div className="rounded-full w-5 h-5 flex justify-center items-center bg-red-500 text-sm font-semibold text-white">
-          {totalItem}
+          {orderForm.items.length}
         </div>
       </div>
 
@@ -87,44 +87,76 @@ export default function MiniCart() {
 
                         <div className="mt-8">
                           <div className="flow-root">
-                            <ul role="list" className="-my-6 divide-y divide-brand-gray-100">
-                            {orderForm.items.map((product) => (
-                              <li key={product.productId} className="flex py-6">
-                                <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-brand-gray-100">
-                                  <img
-                                    src={product.imageUrl}
-                                    alt={product.productName}
-                                    className="h-full w-full object-cover object-center"
-                                  />
-                                </div>
-
-                                <div className="ml-4 flex flex-1 flex-col">
-                                  <div>
-                                    <div className="flex justify-between text-base font-medium text-brand-text-gray-50">
-                                      <h3>
-                                        {product.productName}
-                                      </h3>
-                                      <p className="ml-4">{FormatPrice(product.price / 100)}</p>
+                            {orderForm.items.length ?
+                              <ul role="list" className="-my-6 divide-y divide-brand-gray-100">
+                                {orderForm.items.map((product, index) => (
+                                  <li key={product.productId} className="flex py-6">
+                                    <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-brand-gray-100">
+                                      <img
+                                        src={product.imageUrl}
+                                        alt={product.productName}
+                                        className="h-full w-full object-cover object-center"
+                                      />
                                     </div>
-                                  </div>
-                                  <div className="flex flex-1 items-end justify-between text-sm">
-                                    <p className="text-gray-500">Qtd. {product.quantity}</p>
 
-                                    <div className="flex">
-                                      <button
-                                        type="button"
-                                        className="text-brand-danger hover:text-brand-red"
-                                        onClick={() => dispatch(orderFormRemoveProduct(product.productId))}
-                                      >
-                                        <span className="sr-only">Remove Produto</span>
-                                        <IoMdTrash size={20} />
-                                      </button>
+                                    <div className="ml-4 flex flex-1 flex-col">
+                                      <div>
+                                        <div className="flex justify-between text-base font-medium text-brand-text-gray-50">
+                                          <h3>
+                                            {product.productName}
+                                          </h3>
+
+                                          <div className="flex flex-col ml-4 items-end">
+                                            {product.listPrice &&
+                                              <p className="text-sm line-through">{FormatPrice(product.listPrice / 100)}</p>
+                                            }
+                                            <p className="font-semibold">{FormatPrice(product.price / 100)}</p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div className="flex flex-1 items-end justify-between text-sm">
+                                        <div className="text-gray-500">
+                                          <div className="flex flex-row h-8 w-full rounded-lg relative bg-transparent">
+                                            <button
+                                              onClick={() => dispatch(orderFormDecrementProduct(index))}
+                                              className=" bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-11 rounded-l cursor-pointer outline-none">
+                                              <span className="m-auto text-2xl font-thin">−</span>
+                                            </button>
+
+                                            <div className="flex items-center justify-center w-11 bg-gray-200">
+                                              {product.quantity}
+                                            </div>
+
+                                            <button
+                                              onClick={() => dispatch(orderFormIncrementProduct(index))}
+                                              className="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-11 rounded-r cursor-pointer">
+                                              <span className="m-auto text-2xl font-thin">+</span>
+                                            </button>
+                                          </div>
+                                        </div>
+
+                                        <div className="flex">
+                                          <button
+                                            type="button"
+                                            className="text-brand-danger hover:text-brand-red"
+                                            onClick={() => dispatch(orderFormRemoveProduct(product.productId))}
+                                          >
+                                            <span className="sr-only">Remove Produto</span>
+                                            <IoMdTrash size={20} />
+                                          </button>
+                                        </div>
+                                      </div>
                                     </div>
-                                  </div>
+                                  </li>
+                                ))}
+                              </ul> :
+                              (
+                                <div className="text-brand-gray-150 flex flex-col items-center">
+                                  <FiInbox size={64} />
+                                  <p className="text-xl">Seu carrinho está vazio.</p>
                                 </div>
-                              </li>
-                            ))}
-                            </ul>
+                              )
+                            }
                           </div>
                         </div>
                       </div>
