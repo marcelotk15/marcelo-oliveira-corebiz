@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks/redux-typed-hooks";
 import FormatPrice from "@/helpers/price";
 
 import miniCart from "@/assets/icons/cart.svg";
-import { orderFormRemoveProduct } from "@/store/OrderForm/OrderForm.store";
+import { orderFormDecrementProduct, orderFormIncrementProduct, orderFormRemoveProduct } from "@/store/OrderForm/OrderForm.store";
 
 export default function MiniCart() {
   const dispatch = useAppDispatch();
@@ -90,7 +90,7 @@ export default function MiniCart() {
                           <div className="flow-root">
                             {orderForm.items.length ?
                               <ul role="list" className="-my-6 divide-y divide-brand-gray-100">
-                                {orderForm.items.map((product) => (
+                                {orderForm.items.map((product, index) => (
                                   <li key={product.productId} className="flex py-6">
                                     <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-brand-gray-100">
                                       <img
@@ -110,7 +110,25 @@ export default function MiniCart() {
                                         </div>
                                       </div>
                                       <div className="flex flex-1 items-end justify-between text-sm">
-                                        <p className="text-gray-500">Qtd. {product.quantity}</p>
+                                        <div className="text-gray-500">
+                                          <div className="flex flex-row h-8 w-full rounded-lg relative bg-transparent">
+                                            <button
+                                              onClick={() => dispatch(orderFormDecrementProduct(index))}
+                                              className=" bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-11 rounded-l cursor-pointer outline-none">
+                                              <span className="m-auto text-2xl font-thin">−</span>
+                                            </button>
+
+                                            <div className="flex items-center justify-center w-11 bg-gray-200">
+                                              {product.quantity}
+                                            </div>
+
+                                            <button
+                                              onClick={() => dispatch(orderFormIncrementProduct(index))}
+                                              className="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-11 rounded-r cursor-pointer">
+                                              <span className="m-auto text-2xl font-thin">+</span>
+                                            </button>
+                                          </div>
+                                        </div>
 
                                         <div className="flex">
                                           <button
