@@ -1,15 +1,16 @@
 import React, { useEffect } from "react";
 import Slider, { Settings } from "react-slick";
 
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-typed-hooks';
+import { fetchProducts } from "@/store/Products/Products.store";
+
 import Footer from '@/components/Footer';
 import Newsletter from '@/components/Newsletter';
 import Shelf from "@/components/Shelf";
-
-import { useAppDispatch, useAppSelector } from '@/hooks/redux-typed-hooks';
-import { fetchProducts } from "./store/Products/Products.store";
+import Header from "@/components/Header";
+import MainSlider from "@/components/MainSlider";
 
 import './App.css';
-import MainSlider from "./components/MainSlider";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -38,6 +39,8 @@ function App() {
 
   return (
     <>
+      <Header />
+
       <section className="_main-slider">
         <MainSlider>
           {Array(4).fill(0).map((_, index) =>
