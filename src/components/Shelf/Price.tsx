@@ -18,7 +18,7 @@ export default function Price({ product }: { product: Product }) {
         por {FormatPrice(product.price / 100)}
       </div>
 
-      <div className="text-brand-text-gray-50 line-through text-sm h-5 text-center mt-1">
+      <div className="text-brand-text-gray-50 text-sm h-5 text-center mt-1">
         {product?.installments?.[0] &&
           <>
             ou em {product.installments[0]?.quantity} de {FormatPrice(product.installments[0].value / 100)}
