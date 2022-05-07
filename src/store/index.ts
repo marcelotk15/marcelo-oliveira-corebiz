@@ -1,4 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
 import newsletterReducer from "./Newsletter/Newsletter.store";
 import productsReducer from "./Products/Products.store";
@@ -10,8 +12,16 @@ const reducers = combineReducers({
   orderForm: orderFormReducer
 });
 
+const persistConfig = {
+  key: "corebiz",
+  storage,
+  whitelist: ['orderForm']
+}
+
+const persistedReducer = persistReducer(persistConfig, reducers)
+
 const store = configureStore({
-  reducer: reducers
+  reducer: persistedReducer
 });
 
 export type RootState = ReturnType<typeof store.getState>;
