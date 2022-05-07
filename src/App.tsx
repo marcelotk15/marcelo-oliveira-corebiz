@@ -1,12 +1,11 @@
 import React from 'react';
 
 import './App.css';
+import Footer from './components/Footer';
 
 function App() {
   return (
-    <div className="container mx-auto">
-      <div>Tailwind Installed</div>
-    </div>
+    <Footer />
   );
 }
 
