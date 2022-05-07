@@ -1,39 +1,50 @@
-.App {
-  text-align: center;
+._main-slider .slick-dots {
+  bottom: 2.25rem
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+._shelfs .slick-dots {
+  position: static!important;
+  margin-top: 1rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-float infinite 3s ease-in-out;
-  }
+._main-slider .slick-dots > li > button::before,
+._shelfs .slick-dots > li > button::before {
+  font-size: .5rem
 }
 
-.App-header {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+._main-slider .slick-dots > li > button::before {
+  color: #BDBDBD;
+  opacity: 100;
 }
 
-.App-link {
-  color: rgb(112, 76, 182);
+._main-slider .slick-dots > li.slick-active > button::before,
+._shelfs .slick-dots > li.slick-active > button::before {
+  color: #F8475F;
+  opacity: 100;
 }
 
-@keyframes App-logo-float {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
+._shelfs .slick-arrow {
+  height: 22px;
+}
+
+._shelfs .slick-arrow::before {
+  display: inline-block;
+  height: 22px;
+  opacity: 100;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url("data:image/svg+xml,%3Csvg width='14' height='22' viewBox='0 0 14 22' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4.88085 11.0047L13.111 2.77415C13.3376 2.54806 13.4623 2.24579 13.4623 1.92348C13.4623 1.60099 13.3376 1.29889 13.111 1.07246L12.3898 0.351642C12.1636 0.124846 11.8611 0 11.5388 0C11.2165 0 10.9144 0.124846 10.688 0.351642L0.888651 10.1508C0.661318 10.3779 0.53683 10.6814 0.537725 11.0041C0.53683 11.3282 0.661139 11.6314 0.888651 11.8587L10.6788 21.6484C10.9053 21.8752 11.2074 22 11.5299 22C11.8522 22 12.1543 21.8752 12.3809 21.6484L13.1019 20.9275C13.571 20.4584 13.571 19.6946 13.1019 19.2257L4.88085 11.0047Z' fill='black'/%3E%3C/svg%3E");
+  color: transparent;
+}
+
+._shelfs .slick-next {
+  right: -0.75rem;
+}
+
+._shelfs .slick-prev {
+  left: -0.75rem;
+}
+
+._shelfs .slick-next::before {
+  transform: rotate(180deg);
 }

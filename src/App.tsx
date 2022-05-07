@@ -1,57 +1,92 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
+import React, { useEffect } from "react";
+import Slider, { Settings } from "react-slick";
+
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-typed-hooks';
+import { fetchProducts } from "@/store/Products/Products.store";
+
+import Footer from '@/components/Footer';
+import Newsletter from '@/components/Newsletter';
+import Shelf from "@/components/Shelf";
+import Header from "@/components/Header";
+import MainSlider from "@/components/MainSlider";
+
 import './App.css';
 
 function App() {
+  const dispatch = useAppDispatch();
+  
+  const products = useAppSelector((state) => state.products.products);
+
+  const shelfSliderSettings: Settings = {
+    dots: false,
+    arrows: true,
+    slidesToShow: 4,
+    responsive: [
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 2,
+          dots: true,
+          arrows: false,
+        }
+      }
+    ]
+  }
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <>
+      <Header />
+
+      <section className="_main-slider">
+        <MainSlider>
+          {Array(4).fill(0).map((_, index) =>
+            <picture key={index}>
+              <source 
+                srcSet={`https://picsum.photos/1920/430?random=${index}`}
+                media="(min-width: 768px)"
+              />
+
+              <img
+                src={`https://picsum.photos/320/190?random=${index}`}
+                alt={`${index}`}
+                className="w-full"
+              />
+            </picture>
+          )}
+        </MainSlider>
+      </section>
+
+      <section className="_shelfs mt-6">
+        <div className="container mx-auto">
+          <div>
+            <h2 className="text-xl font-black">
+              Mais Vendidos
+            </h2>
+
+            <div className="bg-brand-gray-150 h-1 w-16"></div>
+          </div>
+
+          <div className="mt-4 pb-10">
+            <Slider {...shelfSliderSettings}>
+              {products.map((product) =>
+                <Shelf
+                  product={product}
+                  key={product.productId}
+                />
+              )}
+            </Slider>
+          </div>
+        </div>
+      </section>
+
+      <Newsletter />
+      
+      <Footer />
+    </>
   );
 }
 
