@@ -26,6 +26,7 @@ const orderFormSlice = createSlice({
 
     orderFormRemoveProduct: (state, { payload }) => {
       state.items = state.items.filter((product) => product.productId !== payload);
+      state.totalPrice = state.items.reduce((acc, act) => acc + (act.price * act.quantity), 0);
     }
   }
 });
