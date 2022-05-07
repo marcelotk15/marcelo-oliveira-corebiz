@@ -37,6 +37,14 @@
   color: transparent;
 }
 
+._shelfs .slick-next {
+  right: -0.75rem;
+}
+
+._shelfs .slick-prev {
+  left: -0.75rem;
+}
+
 ._shelfs .slick-next::before {
-  transform: rotate(180deg)
+  transform: rotate(180deg);
 }
