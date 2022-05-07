@@ -1,6 +1,10 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
-const reducers = combineReducers({});
+import newsletterReducer from "./Newsletter/Newsletter.store";
+
+const reducers = combineReducers({
+  newsletter: newsletterReducer
+});
 
 const store = configureStore({
   reducer: reducers
