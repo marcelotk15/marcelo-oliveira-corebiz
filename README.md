@@ -2,7 +2,7 @@
 👀 [Online Demo](https://marcelo-oliveira-corebiz.vercel.app) - deploy in Vercel.
 
 ## 📋 Prerequisite
-- Node 16.14.0
+- Node 14.x
 
 ## 🏃‍♂️ Running the Project
 ```bash
